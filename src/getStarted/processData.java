@@ -74,7 +74,7 @@ public class processData {
 		PrintWriter writer = null;
 		float maxPt=-999;
 		float minPt=-999;
-		String filename=input.get(0).id+"Well.txt";
+		String filename=input.get(0).id+"Well.LAS";
 		TreeMap<Float,Integer> PrefMap=new TreeMap<Float,Integer>();
 		try {
 			writer = new PrintWriter(filename,"UTF-8");
@@ -137,7 +137,7 @@ public class processData {
 		
 		for(Map.Entry<Float,Integer> entry: h1.entrySet()){
 //			writer.println(i+"---Key: "+ entry.getKey()+" Value: "+entry.getValue());
-			writer.println(entry.getKey()+"      "+entry.getValue());
+			writer.println(entry.getKey()+"           "+entry.getValue());
 			i++;
 			
 		}
