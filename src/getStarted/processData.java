@@ -82,12 +82,6 @@ public class processData {
 			// find largest base .find smallest top
 			maxPt=largestVal(input);
 			minPt=smallestVal(input);
-			writer.println("MAX:"+maxPt);
-			writer.println("MIN:"+minPt);
-			writer.println("Size should be:"+(maxPt-minPt)*2);
-			writer.println("number of entry:"+input.size());
-			
-
 			//generate PrefMap
 			int count=1;
 			for (float i=minPt; i<=maxPt;i+=0.5){
