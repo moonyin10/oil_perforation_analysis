@@ -58,7 +58,7 @@ public class getStartedTest {
 	}
 	
 	@Test
-	public void integrationTest() throws FileNotFoundException, IOException {
+	public void integrationTest()  {
 		
 		ArrayList<Hole> PasedData=new ArrayList<Hole>();
 		System.out.println("Test starting...");
@@ -67,17 +67,18 @@ public class getStartedTest {
 		String csvFile="/Users/Moonshine/Engineering/eclipse_workspace/KeithProjectOilData/dataFile/no_header_origional.csv";
 
 		//read csv file
-		PasedData=processData.readCsv(csvFile);
-		
-		//generate list of well id
-		ArrayList<String> wellList=processData.wellListGenerator(csvFile);
-		
-
-		
-		for(String wellId:wellList){
-			TreeMap<Float,Integer> result=new TreeMap<Float,Integer>();
-			result=processData.prefMapGenerator(processData.holeFilter(PasedData, wellId));
-			System.out.println(wellId+"file Map size:" + result.size());
+		try {
+			PasedData=processData.readCsv(csvFile);
+			//generate list of well id
+			ArrayList<String> wellList=processData.wellListGenerator(csvFile);
+			for(String wellId:wellList){
+				TreeMap<Float,Integer> result=new TreeMap<Float,Integer>();
+				result=processData.prefMapGenerator(processData.holeFilter(PasedData, wellId));
+				System.out.println(wellId+"file Map size:" + result.size());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
