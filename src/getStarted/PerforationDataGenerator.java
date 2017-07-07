@@ -8,6 +8,11 @@ import DomainObject.Hole;
 import javax.swing.JOptionPane;
 
 
+/**
+ * @author Moon Yin
+ * 7/7/2017
+ *
+ */
 public class PerforationDataGenerator {
 
 	public static void main(String[] args) {
@@ -20,15 +25,13 @@ public class PerforationDataGenerator {
 		
 		ArrayList<Hole> PasedData=new ArrayList<Hole>();
 		System.out.println("Test starting...");
-//		String csvFile="/Users/Moonshine/Engineering/eclipse_workspace/KeithProjectOilData/dataFile/smallerSample.csv";
-//		String csvFile="/Users/Moonshine/Engineering/eclipse_workspace/KeithProjectOilData/dataFile/no_header_origional.csv";
-//		String csvFile="/Users/Moonshine/Engineering/eclipse_workspace/KeithProjectOilData/dataFile/no_header_origional.csv";
 
-		//read csv file
 		try {
+			//read csv file
 			PasedData=processData.readCsv(csvFile);
 			//generate list of well id
 			ArrayList<String> wellList=processData.wellListGenerator(csvFile);
+			//generate file
 			for(String wellId:wellList){
 				TreeMap<Float,Integer> result=new TreeMap<Float,Integer>();
 				result=processData.prefMapGenerator(processData.holeFilter(PasedData, wellId));
@@ -38,7 +41,5 @@ public class PerforationDataGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
-	
+	}	
 }

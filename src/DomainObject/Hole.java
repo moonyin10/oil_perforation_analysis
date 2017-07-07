@@ -1,13 +1,14 @@
 package DomainObject;
 
 public class Hole {
+	
+	/**
+	 * Hole object represents each data record in the input file
+	 */
 
 	public String id;
 	public float top;
 	public float base;
-	
-
-	
 	
 	public Hole(String id, float top, float base) {
 		super();

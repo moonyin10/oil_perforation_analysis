@@ -7,14 +7,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import DomainObject.Hole;
 
-import java.util.Collections;
 
+/**
+ * Filter well ID 
+ * @author Moon Yin
+ * 7/7/2017
+ *
+ */
 public class processData {
 	
 	public static ArrayList<Hole> holeFilter(ArrayList<Hole> input,String target){
@@ -36,16 +40,12 @@ public class processData {
 		String line="";
 		try{
 			br=new BufferedReader(new FileReader(location));
-			int count=1;
 			while((line=br.readLine())!=null){
 				String [] field=line.split(",");
-	//			System.out.println("::TESTING:: --data:"+field[0]+" "+field[1]+" "+field[2]+" ");
-				String well_id=field[0];
 				float topNum=Float.parseFloat(field[1]);
 				float baseNum=Float.parseFloat(field[2]);
 				Hole newHole= new Hole(field[0],topNum,baseNum);
-	//			System.out.println("::TESTING::"+count+ "--Parsed data:"+newHole.toString());
-	//			count++;
+
 				PasedData.add(newHole);	
 			}
 		
@@ -66,7 +66,7 @@ public class processData {
 	}
 	
 	/**
-	 * This function processes well data table,  return a Pref map <Point(float), Pref Value(Integer)>.
+	 * This function that generates the LAS file for each individual well. The input should be filter Hole list.
 	 * @param input
 	 * @return
 	 */
@@ -83,13 +83,9 @@ public class processData {
 			maxPt=largestVal(input);
 			minPt=smallestVal(input);
 			//generate PrefMap
-			int count=1;
 			for (float i=minPt; i<=maxPt;i+=0.5){
-//				System.out.println(count+":"+i);
 				PrefMap.put(i, 0);
-				count++;
 			}
-//			
 //			//go through each record, update value of map
 			for (Hole h1:input){
 				
@@ -106,16 +102,20 @@ public class processData {
 		printTreeMap(PrefMap,writer,minPt,maxPt,input.get(0).id);
 		writer.close();
 		return PrefMap;
-		
-
-		
-		
 	}
 	
+	/**
+	 * This function print the reports
+	 * @param h1
+	 * @param writer
+	 * @param startFt
+	 * @param stopFt
+	 * @param wellId
+	 */
+	
 	public static void printTreeMap(TreeMap<Float,Integer> h1,PrintWriter writer,float startFt, float stopFt,String wellId){
-		int i=1;
 		writer.println("~VERSION INFORMATION");
-		writer.println("VERS.      3.0   :CWLS LOG ASCII STANDARD--VERSION 2.0");
+		writer.println("VERS.      2.0   :CWLS LOG ASCII STANDARD--VERSION 2.0");
 		writer.println("WRAP.      NO    :ONE LINE PER DEPTH STEP");
 		writer.println("~WELL INFORMATION");
 		writer.println("#============================================================");
@@ -136,10 +136,7 @@ public class processData {
 		
 		
 		for(Map.Entry<Float,Integer> entry: h1.entrySet()){
-//			writer.println(i+"---Key: "+ entry.getKey()+" Value: "+entry.getValue());
 			writer.println(entry.getKey()+"           "+entry.getValue());
-			i++;
-			
 		}
 	}
 	
@@ -173,7 +170,6 @@ public class processData {
 			br=new BufferedReader(new FileReader(location));
 			while((line=br.readLine())!=null){
 				String [] field=line.split(",");
-	//			System.out.println("::TESTING:: --data:"+field[0]+" "+field[1]+" "+field[2]+" ");
 				String well_id=field[0];
 				if(!wellList.contains(well_id)){
 					wellList.add(well_id);
